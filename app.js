@@ -4,6 +4,7 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var readline = require('readline');
 var logger = require('morgan');
+var PythonShell = require('python-shell');
 
 var index = require('./routes/index');
 var http = require('http');
@@ -35,8 +36,12 @@ var drinkId = 0;
 var clients = {};
 var drinkQueue = [];
 
+// Python Shell options
+var options = {
+  scriptPath: 'scripts'
+};
+
 var processMsg = function(msgString) {
-  console.log(msgString);
   parsedMsg = JSON.parse(msgString);
   var newDrink = {};
   if (parsedMsg.type == 'mix') {
@@ -47,32 +52,50 @@ var processMsg = function(msgString) {
       type: 'order',
       status: 'Pending'
     };
-    drinkQueue.push(newDrink);
+    if (drinkQueue.length == 0) {
+      drinkQueue.push(newDrink);
+      processQueue();
+    } else {
+      drinkQueue.push(newDrink);
+    }
   } else if (parsedMsg.type == 'chat') {
     // Do chat things
   }
-  console.log(parsedMsg.type);
   for (var i in clients) {
     clients[i].sendUTF(JSON.stringify(newDrink));
   }
-
 }
 
 var processQueue = function() {
-  var topDrink = drinkQueue.pop(0);
+  if (drinkQueue.length == 0) {
+    // Queue Empty
+    return;
+  }
+  var topDrink = drinkQueue[0];
   topDrink.status = 'Mixing';
   for (var i in clients) {
       clients[i].sendUTF(JSON.stringify(topDrink));
   }
   // Run Josh's scripts
-  var processedDrink = topDrink;
-  processedDrink.status = "Clear";
-  window.setTimeout(function() {
+  PythonShell.run('test.py', {scriptPath: 'scripts'}, function(err, results) {
+    if (err) console.log('Sadness: ' + err);
+    var processedDrink = topDrink;
+    processedDrink.status = "Clear";
     for (var i in clients) {
       clients[i].sendUTF(JSON.stringify(processedDrink));
     }
-  }, 60000);
+    drinkQueue.shift();
+    processQueue();
+  });
 
+
+  // var processedDrink = topDrink;
+  // processedDrink.status = "Clear";
+  // window.setTimeout(function() {
+  //   for (var i in clients) {
+  //     clients[i].sendUTF(JSON.stringify(processedDrink));
+  //   }
+  // }, 60000);
 }
 
 wsServer.on('request', function(r) {
