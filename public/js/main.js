@@ -20,7 +20,7 @@ $('#pingButton').click(function() {
   $('#message').innerHTML = "";
 });
 
-ws = new WebSocket('ws://18.111.63.105:1234', 'echo-protocol');
+ws = new WebSocket('ws://' + window.location.hostname + ':1234', 'echo-protocol');
 console.log(ws);
 
 var orderMix = function(e) {
