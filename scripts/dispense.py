@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import time
 
 GPIO.setmode(GPIO.BOARD)
 
@@ -7,7 +8,7 @@ GPIO.setup(disp1, GPIO.OUT,initial=GPIO.LOW)
 
 i = 0
 while(i<1000):
-	i++;
+	i++
 	if(i%8==0):
 		GPIO.output(disp1[3], GPIO.LOW)		
 	if(i%8==1):
@@ -24,4 +25,6 @@ while(i<1000):
 		GPIO.output(disp1[2], GPIO.LOW)
 	if(i%8==7):
 		GPIO.output(disp1[0], GPIO.HIGH)
+		
+	time.sleep(0.01)
 }
