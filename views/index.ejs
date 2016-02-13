@@ -12,11 +12,11 @@
       <div class="col s6">
           <p><span class="flow-text">Click to order a drink</span></p>
           <input class="col push-s2 s8" id="name" placeholder='Your Name'/>
-          <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink1" value="1"><span class="flow-text">Order Drink #1</span></button></div>
-          <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink2" value="2"><span class="flow-text">Order Drink #2</span></button></div>
-          <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink3" value="3"><span class="flow-text">Order Drink #3</span></button></div>
-          <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink4" value="4"><span class="flow-text">Order Drink #4</span></button></div>
-          <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink5" value="5"><span class="flow-text">Order Water</span></button></div>
+          <div class="row"><button class="col s8 push-s2 waves-effect waves-light grey black-text lighten-3 btn-large" onclick="orderMix(this)" id="orderDrink1" value="1"><span class="flow-text">Order Drink #1</span></button></div>
+          <div class="row"><button class="col s8 push-s2 waves-effect waves-light grey black-text lighten-3 btn-large" onclick="orderMix(this)" id="orderDrink2" value="2"><span class="flow-text">Order Drink #2</span></button></div>
+          <div class="row"><button class="col s8 push-s2 waves-effect waves-light grey black-text lighten-3 btn-large" onclick="orderMix(this)" id="orderDrink3" value="3"><span class="flow-text">Order Drink #3</span></button></div>
+          <div class="row"><button class="col s8 push-s2 waves-effect waves-light grey black-text lighten-3 btn-large" onclick="orderMix(this)" id="orderDrink4" value="4"><span class="flow-text">Order Drink #4</span></button></div>
+          <div class="row"><button class="col s8 push-s2 waves-effect waves-light grey black-text lighten-3 btn-large" onclick="orderMix(this)" id="orderDrink5" value="5"><span class="flow-text">Order Water</span></button></div>
       </div>
       <div class="col s6">
         <p><span class="flow-text">Current Queue</span></p>
@@ -33,26 +33,64 @@
       </div>
       <div class="row">
         <div class="col s12">
-          <div class="left green lighten-3" style="width:0%;height:5vw"></div>
-          <div class="left teal lighten-3" style="width:22%;height:5vw"></div>
-          <div class="left purple lighten-3" style="width:10%;height:5vw"></div>
-          <div class="left red lighten-3" style="width:68%;height:5vw"></div>
+          <div id="drink1Fill" class="left green lighten-3" style="width:0%;height:5vw"></div>
+          <div id="drink2Fill" class="left teal lighten-3" style="width:0%;height:5vw"></div>
+          <div id="drink3Fill" class="left purple lighten-3" style="width:0%;height:5vw"></div>
+          <div id="drink4Fill" class="left red lighten-3" style="width:0%;height:5vw"></div>
+          <div id="drink5Fill" class="left grey lighten-3" style="width:100%;height:5vw"></div>
         </div>
       </div>
       <div class="row">
         <div class="col s3">
-          <div class="card-panel green lighten-3 hoverable"><span class="flow-text">#1</span></div>
+          <div class="card-panel green lighten-3 hoverable" onclick="$('#modal1').openModal();"><span class="flow-text">#1</span></div>
+          <div id="modal1" class="modal">
+            <div class="modal-content">
+              <h4>Drink #1 Percentage</h4>
+                <div class="col s2 push-s5"><span class="fill-text"><input type="text" id="drink1Percentage" value='0'></span></div>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" id="saveDrink1Percentage" class="modal-action modal-close waves-effect waves-green btn-flat" onclick="saveDrinkPercentage(1)">Save</a>
+            </div>
+          </div>
         </div>
         <div class="col s3">
-          <div class="card-panel teal lighten-3 hoverable"><span class="flow-text">#2</span></div>
+          <div class="card-panel teal lighten-3 hoverable" onclick="$('#modal2').openModal();"><span class="flow-text">#2</span></div>
+          <div id="modal2" class="modal">
+            <div class="modal-content">
+              <h4>Drink #2 Percentage</h4>
+                <div class="col s2 push-s5"><span class="fill-text"><input type="text" id="drink2Percentage" value='0'></span></div>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" id="saveDrink2Percentage" class="modal-action modal-close waves-effect waves-green btn-flat" onclick="saveDrinkPercentage(2)">Save</a>
+            </div>
+          </div>
         </div>
         <div class="col s3">
-          <div class="card-panel purple lighten-3 hoverable"><span class="flow-text">#3</span></div>
+          <div class="card-panel purple lighten-3 hoverable" onclick="$('#modal3').openModal();"><span class="flow-text">#3</span></div>
+          <div id="modal3" class="modal">
+            <div class="modal-content">
+              <h4>Drink #3 Percentage</h4>
+                <div class="col s2 push-s5"><span class="fill-text"><input type="text" id="drink3Percentage" value='0'></span></div>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" id="saveDrink3Percentage" class="modal-action modal-close waves-effect waves-green btn-flat" onclick="saveDrinkPercentage(3)">Save</a>
+            </div>
+          </div>
         </div>
         <div class="col s3">
-          <div class="card-panel red lighten-3 hoverable"><span class="flow-text">#4</span></div>
+          <div class="card-panel red lighten-3 hoverable" onclick="$('#modal4').openModal();"><span class="flow-text">#4</span></div>
+          <div id="modal4" class="modal">
+            <div class="modal-content">
+              <h4>Drink #4 Percentage</h4>
+                <div class="col s2 push-s5"><span class="fill-text"><input type="text" id="drink4Percentage" value='0'></span></div>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" id="saveDrink4Percentage" class="modal-action modal-close waves-effect waves-green btn-flat" onclick="saveDrinkPercentage(4)">Save</a>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="row"><button class="col s8 push-s2 waves-effect waves-light grey black-text lighten-3 btn-large" onclick="orderMix(this)" id="orderDrink6" value="6"><span class="flow-text">Order Custom Drink</span></button></div>
     </div>
     <div id="chatlog">
       <button id="pingButton">Ping</button>
