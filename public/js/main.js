@@ -163,7 +163,5 @@ ws.addEventListener('message', function(e) {
   } else if (msg.type == 'order') {
     updateOrderQueue(msg.status, msg.id, msg.name);
   }
-  document.getElementById('chatlog').innerHTML += '<br>' + msg;
-
 
 });
