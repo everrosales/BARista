@@ -68,6 +68,7 @@ function percentageBalancer(mostRecentDrink){
     percentage2 = Number($('#drink2Percentage').val());
     percentage3 = Number($('#drink3Percentage').val());
     percentage4 = Number($('#drink4Percentage').val());
+    totalPercentage = percentage1 + percentage2 + percentage3 + percentage4
     var percentageWater = 100 - (totalPercentage);
     $('#drink1Fill').val(percentage1).css("width", percentage1+"%");
     $('#drink2Fill').val(percentage2).css("width", percentage2+"%");
