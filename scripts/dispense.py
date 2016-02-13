@@ -10,6 +10,7 @@ disp =	[ [3, 5, 7, 8]
 ,[15, 16, 18, 19]
 ,[21, 22, 23, 24]
 ,[29, 31, 32, 33]]
+
 GPIO.setup(disp[0], GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(disp[1], GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(disp[2], GPIO.OUT,initial=GPIO.LOW)
