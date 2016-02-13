@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var readline = require('readline');
 var logger = require('morgan');
 
-var index = require('./routes/index');a
+var index = require('./routes/index');
 
 var app = express();
 
@@ -22,7 +22,7 @@ app.use('/', index);
 // app.use('/gmail', gmail);
 var WebSocketServer = require('websocket').server;
 wsServer = new WebSocketServer({
-  httpServer: server
+  httpServer: app
 });
 
 wsServer.on('request', function(r) {
