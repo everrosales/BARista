@@ -4,37 +4,13 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var readline = require('readline');
 var logger = require('morgan');
-var Gmail = require('./utils/Gmail');
 
 var index = require('./routes/index');
-// var google = require('googleapis');
-// var googleAuth = require('google-auth-library');
-
-// Gmail goodies
-// var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
-// var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
-//     process.env.USERPROFILE) + '/.credentials/';
-// var TOKEN_PATH = TOKEN_DIR + 'gmail-nodejs-quickstart.json';
-
-// Load client secrets from a local file.
-/**
- * Process client secrets and stuff
- *
- */
-var secret_contents;
-
-fs.readFile('client_secret.json', function processClientSecrets(err, content) {
-  if (err) {
-    console.log('Error loading client secret file: ' + err);
-    return;
-  }
-  // Authorize a client with the loaded credentials, then call the
-  // Gmail API.
-  //Gmail.authorize(JSON.parse(content), Gmail.listLabels);
-  secret_contents = content;
-  // Gmail.authorize(JSON.parse(content), Gmail.getUnreadEmailThreads);
+var http = require('http');
+var server = http.createServer(function(request, response) {});
+server.listen(1234, function() {
+  console.log((new Date()) + ' Server is listening on port 1234');
 });
-
 
 var app = express();
 
@@ -49,6 +25,33 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 // app.use('/gmail', gmail);
+var WebSocketServer = require('websocket').server;
+wsServer = new WebSocketServer({
+  httpServer: server
+});
+
+var count = 0;
+var clients = {};
+
+wsServer.on('request', function(r) {
+  var connection = r.accept('echo-protocol', r.origin);
+  var id = count++;
+  clients[id] = connection;
+  console.log((new Date()) + ' Connection accepted [' + id + ']');
+  connection.on('message', function(message) {
+    var msgString = message.utf8Data;
+
+    console.log('Recieved msg: ' + msgString + ', by client: ' + id);
+    for (var i in clients) {
+      clients[i].sendUTF(msgString);
+    }
+  });
+
+  connection.on('close', function(reasonCode, description) {
+    delete clients[id];
+    console.log((new Date()) + ' Peer ' + connection.remoteAddress + 'disconnected.');
+  });
+});
 
 
 // catch 404 and forward to error handler
