@@ -44,8 +44,11 @@ if(len(sys.argv))!= 6: #wrong arg count
 	sys.exit(1)
 	
 times = [int(i) for i in sys.argv[1:]]
-if(times[0]+times[1]+times[2]+times[3]>20000/TIME_SCALE): #too much
+if(times[0]+times[1]+times[2]+times[3]+times[4]>20000/TIME_SCALE): #too much
 	sys.exit(2)
+	
+if(times[0]<0 or times[1]<0 or times[2]<0 or times[3]<0 or times[4]<0):
+	sys.exit(3)
 	
 i = 0
 while(i<TIME_SCALE*max(times)):
