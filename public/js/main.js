@@ -35,6 +35,7 @@ var orderMix = function(e) {
   var jsonString = JSON.stringify(mixObject);
   console.log(jsonString);
   ws.send(jsonString);
+  Materialize.toast('Ordering Drink!', 2000)
 };
 
 var sendMessage = function() {

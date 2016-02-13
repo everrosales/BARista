@@ -11,11 +11,11 @@
     <div class="row center-align">
       <div class="col s10 push-s1">
           <p><span class="flow-text">Click the button below to order a drink</span></p>
-          <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink1" value="1"><span class="flow-text">Order Drink #1</span></button></div>
-          <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink2" value="2"><span class="flow-text">Order Drink #2</span></button></div>
-          <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink3" value="3"><span class="flow-text">Order Drink #3</span></button></div>
-          <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink4" value="4"><span class="flow-text">Order Drink #4</span></button></div>
-          <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink5" value="5"><span class="flow-text">Order Water</span></button></div>
+          <div class="row"><button class="col s8 push-s2 waves-effect waves-light grey black-text lighten-3 btn-large" onclick="orderMix(this)" id="orderDrink1" value="1"><span class="flow-text">Order Drink #1</span></button></div>
+          <div class="row"><button class="col s8 push-s2 waves-effect waves-light grey black-text lighten-3 btn-large" onclick="orderMix(this)" id="orderDrink2" value="2"><span class="flow-text">Order Drink #2</span></button></div>
+          <div class="row"><button class="col s8 push-s2 waves-effect waves-light grey black-text lighten-3 btn-large" onclick="orderMix(this)" id="orderDrink3" value="3"><span class="flow-text">Order Drink #3</span></button></div>
+          <div class="row"><button class="col s8 push-s2 waves-effect waves-light grey black-text lighten-3 btn-large" onclick="orderMix(this)" id="orderDrink4" value="4"><span class="flow-text">Order Drink #4</span></button></div>
+          <div class="row"><button class="col s8 push-s2 waves-effect waves-light grey black-text lighten-3 btn-large" onclick="orderMix(this)" id="orderDrink5" value="5"><span class="flow-text">Order Water</span></button></div>
       </div>
     </div>
     <div class="divider"></div>
@@ -35,7 +35,16 @@
       </div>
       <div class="row">
         <div class="col s3">
-          <div class="card-panel green lighten-3 hoverable"><span class="flow-text">#1</span></div>
+          <button data-target="modal1" class="btn modal-trigger">Modal</button>
+          <div id="modal1" class="modal">
+            <div class="modal-content">
+              <h4>Modal Header</h4>
+              <p>Test</p>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+            </div>
+          </div>
         </div>
         <div class="col s3">
           <div class="card-panel teal lighten-3 hoverable"><span class="flow-text">#2</span></div>
@@ -47,7 +56,7 @@
           <div class="card-panel red lighten-3 hoverable"><span class="flow-text">#4</span></div>
         </div>
       </div>
-      <div class="row"><button class="col s8 push-s2" id="orderDrink5"><span class="flow-text">Order Custom Drink</span></button></div>
+      <div class="row"><button class="col s8 push-s2 waves-effect waves-light grey black-text lighten-3 btn-large" onclick="orderMix(this)" id="orderDrink6" value="6"><span class="flow-text">Order Custom Drink</span></button></div>
     </div>
     <div id="chatlog">
       <button id="pingButton">Ping</button>
