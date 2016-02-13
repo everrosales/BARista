@@ -4,12 +4,17 @@ import sys
 
 GPIO.setmode(GPIO.BOARD)
 
-disp[0] = [3, 5, 7, 8]
-disp[1] = [10, 11, 12, 13]
-disp[2] = [15, 16, 18, 19]
-disp[3] = [21, 22, 23, 24]
-disp[4] = [29, 31, 32, 33]
-GPIO.setup(disp1, GPIO.OUT,initial=GPIO.LOW)
+
+disp =	[ [3, 5, 7, 8]
+,[10, 11, 12, 13]
+,[15, 16, 18, 19]
+,[21, 22, 23, 24]
+,[29, 31, 32, 33]]
+GPIO.setup(disp[0], GPIO.OUT,initial=GPIO.LOW)
+GPIO.setup(disp[1], GPIO.OUT,initial=GPIO.LOW)
+GPIO.setup(disp[2], GPIO.OUT,initial=GPIO.LOW)
+GPIO.setup(disp[3], GPIO.OUT,initial=GPIO.LOW)
+GPIO.setup(disp[4], GPIO.OUT,initial=GPIO.LOW)
 
 i = 0
 if(len(sys.argv))!= 4: #wrong arg count
