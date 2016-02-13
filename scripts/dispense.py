@@ -6,7 +6,7 @@ TIME_SCALE = 1000
 
 def dispSet(d, i):
 	if(i%8==0):
-		GPIO.output(disp[d][3], GPIO.LOW)		
+		GPIO.output(disp[d][3], GPIO.LOW)
 	if(i%8==1):
 		GPIO.output(disp[d][1], GPIO.HIGH)
 	if(i%8==2):
@@ -42,14 +42,14 @@ time.sleep(2)#server buffering
 
 if(len(sys.argv))!= 6: #wrong arg count
 	sys.exit(1)
-	
+
 times = [int(i) for i in sys.argv[1:]]
 if(times[0]+times[1]+times[2]+times[3]+times[4]>20000/TIME_SCALE): #too much
 	sys.exit(2)
 	
 if(times[0]<0 or times[1]<0 or times[2]<0 or times[3]<0 or times[4]<0):
 	sys.exit(3)
-	
+
 i = 0
 while(i<TIME_SCALE*max(times)):
 	i += 1
@@ -63,7 +63,7 @@ while(i<TIME_SCALE*max(times)):
 		dispSet(3,i)
 	if(times[4]>i/TIME_SCALE):
 		dispSet(4,i)
-		
+
 	time.sleep(0.001)
-	
+
 sys.exit(0)
