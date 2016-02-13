@@ -31,20 +31,66 @@ wsServer = new WebSocketServer({
 });
 
 var count = 0;
+var drinkId = 0;
 var clients = {};
+var drinkQueue = [];
+
+var processMsg = function(msgString) {
+  console.log(msgString);
+  parsedMsg = JSON.parse(msgString);
+  var newDrink = {};
+  if (parsedMsg.type == 'mix') {
+    newDrink = {
+      name: parsedMsg.name,
+      id: drinkId++,
+      recipe: parsedMsg.recipe,
+      type: 'order',
+      status: 'Pending'
+    };
+    drinkQueue.push(newDrink);
+  } else if (parsedMsg.type == 'chat') {
+    // Do chat things
+  }
+  console.log(parsedMsg.type);
+  for (var i in clients) {
+    clients[i].sendUTF(JSON.stringify(newDrink));
+  }
+
+}
+
+var processQueue = function() {
+  var topDrink = drinkQueue.pop(0);
+  topDrink.status = 'Mixing';
+  for (var i in clients) {
+      clients[i].sendUTF(JSON.stringify(topDrink));
+  }
+  // Run Josh's scripts
+  var processedDrink = topDrink;
+  processedDrink.status = "Clear";
+  window.setTimeout(function() {
+    for (var i in clients) {
+      clients[i].sendUTF(JSON.stringify(processedDrink));
+    }
+  }, 60000);
+
+}
 
 wsServer.on('request', function(r) {
   var connection = r.accept('echo-protocol', r.origin);
   var id = count++;
   clients[id] = connection;
+  for (var i = 0; i < drinkQueue.length; i++) {
+    connection.sendUTF(JSON.stringify(drinkQueue[i]));
+  }
   console.log((new Date()) + ' Connection accepted [' + id + ']');
   connection.on('message', function(message) {
     var msgString = message.utf8Data;
 
+    processMsg(msgString);
+
+
     console.log('Recieved msg: ' + msgString + ', by client: ' + id);
-    for (var i in clients) {
-      clients[i].sendUTF(msgString);
-    }
+
   });
 
   connection.on('close', function(reasonCode, description) {

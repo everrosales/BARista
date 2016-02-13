@@ -9,13 +9,19 @@
   <div class="container">
     <div class="divider"></div>
     <div class="row center-align">
-      <div class="col s10 push-s1">
-          <p><span class="flow-text">Click the button below to order a drink</span></p>
+      <div class="col s6">
+          <p><span class="flow-text">Click to order a drink</span></p>
+          <input class="col push-s2 s8" id="name" placeholder='Your Name'/>
           <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink1" value="1"><span class="flow-text">Order Drink #1</span></button></div>
           <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink2" value="2"><span class="flow-text">Order Drink #2</span></button></div>
           <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink3" value="3"><span class="flow-text">Order Drink #3</span></button></div>
           <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink4" value="4"><span class="flow-text">Order Drink #4</span></button></div>
           <div class="row"><button class="col s8 push-s2" onclick="orderMix(this)" id="orderDrink5" value="5"><span class="flow-text">Order Water</span></button></div>
+      </div>
+      <div class="col s6">
+        <p><span class="flow-text">Current Queue</span></p>
+        <ul id="drinkQueue">
+        </ul>
       </div>
     </div>
     <div class="divider"></div>
