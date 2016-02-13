@@ -10,10 +10,6 @@ var drinkMap = {
   '5': {'a': 0, 'b': 0, 'c': 0,'d': 0, 'e': 1}
 }
 
-$('#orderDrink').click(function() {
-  console.log('order me a drink minion');
-});
-
 var saveDrinkPercentage = function(drinkNum){
     var percentage = $('#drink' + drinkNum + "Percentage").val();
     percentageBalancer(drinkNum);
