@@ -32,11 +32,14 @@ disp =	[ [3, 5, 7, 8]
 ,[21, 22, 23, 24]
 ,[29, 31, 32, 33]]
 
+button = 26
+
 GPIO.setup(disp[0], GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(disp[1], GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(disp[2], GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(disp[3], GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(disp[4], GPIO.OUT,initial=GPIO.LOW)
+GPIO.setup(button, GPIO.IN)
 
 time.sleep(2)#server buffering
 
@@ -50,6 +53,9 @@ if(times[0]+times[1]+times[2]+times[3]+times[4]>20000/TIME_SCALE): #too much
 if(times[0]<0 or times[1]<0 or times[2]<0 or times[3]<0 or times[4]<0):
 	sys.exit(3)
 
+while(not GPIO.input(button)):
+	pass
+	
 i = 0
 while(i<TIME_SCALE*max(times)):
 	i += 1
