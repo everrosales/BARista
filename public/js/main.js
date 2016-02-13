@@ -19,11 +19,11 @@ var saveDrinkPercentage = function(drinkNum){
     percentageBalancer(drinkNum);
 }
 
-$('#pingButton').click(function() {
+/*$('#pingButton').click(function() {
   console.log('clicking ping');
   sendMessage();
   $('#message').innerHTML = "";
-});
+});*/
 
 ws = new WebSocket('ws://' + window.location.hostname + ':1234', 'echo-protocol');
 console.log(ws);
@@ -40,12 +40,45 @@ function percentageBalancer(mostRecentDrink){
     var percentage2 = Number($('#drink2Percentage').val());
     var percentage3 = Number($('#drink3Percentage').val());
     var percentage4 = Number($('#drink4Percentage').val());
-    var percentageWater = 100 - (percentage1 + percentage2 + percentage3 + percentage4);
+    var totalPercentage = percentage1 + percentage2 + percentage3 + percentage4
+    if(totalPercentage > 100){
+        //Do stuff here
+        var difference = totalPercentage - 100;
+        while(difference>0){
+            var allDrinkNums = [];
+            for(var i=1; i < 5; i++){
+                if(i != mostRecentDrink && Number($('#drink' + i + 'Percentage').val()) > 0){
+                    allDrinkNums.push(i);
+                }
+            }
+            differencePer = difference*1.0/(allDrinkNums.length);
+            for(var i=0; i < allDrinkNums.length; i++){
+                percent = Number($('#drink' + allDrinkNums[i] + 'Percentage').val());
+                if(differencePer > percent){
+                    $('#drink' + allDrinkNums[i] + 'Percentage').val(0);
+                    difference-=percent;
+                }else{
+                    $('#drink' + allDrinkNums[i] + 'Percentage').val(percent - differencePer);
+                    difference-=differencePer;
+                }
+            }
+        }
+    }
+    percentage1 = Number($('#drink1Percentage').val());
+    percentage2 = Number($('#drink2Percentage').val());
+    percentage3 = Number($('#drink3Percentage').val());
+    percentage4 = Number($('#drink4Percentage').val());
+    var percentageWater = 100 - (totalPercentage);
     $('#drink1Fill').val(percentage1).css("width", percentage1+"%");
     $('#drink2Fill').val(percentage2).css("width", percentage2+"%");
     $('#drink3Fill').val(percentage3).css("width", percentage3+"%");
     $('#drink4Fill').val(percentage4).css("width", percentage4+"%");
     $('#drink5Fill').val(percentageWater).css("width", percentageWater+"%");
+    $('#drink1PercentageShow').text((Math.round(percentage1*100)/100.0) + '%');
+    $('#drink2PercentageShow').text((Math.round(percentage2*100)/100.0) + '%');
+    $('#drink3PercentageShow').text((Math.round(percentage3*100)/100.0) + '%');
+    $('#drink4PercentageShow').text((Math.round(percentage4*100)/100.0) + '%');
+    $('#waterPercentage').text('Water Percentage: ' + (Math.round(percentageWater*100)/100.0) + '%');
 }
 
 var orderMix = function(e) {
@@ -69,13 +102,30 @@ var orderMix = function(e) {
   Materialize.toast('Ordering Drink!', 2000)
 };
 
-var orderCustomMix = function(e) {
-  // Make a custom drink order
-  // 1) fetch the different proportions of the various types of drinks
-  // 2) Create a custom recipe like with the drink map
-  // 3) create a mixObject
-  // 4) JSON.stringify(mixObject)
-  // 5) send the order via websocket (ws.send(jsonString))
+var orderCustomMix = function(e) { 
+  var mix = e.value;
+  var name = document.getElementById('name').value;
+  // TODO(everrosales): Check that mix is a number 1, 2, 3, 4, 5
+  var percentage1 = Number($('#drink1Percentage').val())/100.0;
+  var percentage2 = Number($('#drink2Percentage').val())/100.0;
+  var percentage3 = Number($('#drink3Percentage').val())/100.0;
+  var percentage4 = Number($('#drink4Percentage').val())/100.0;
+  var totalPercentage = percentage1 + percentage2 + percentage3 + percentage4
+  var percentageWater = (1 - (totalPercentage));
+  // Create the mix object
+  var mixObject = {
+    type: 'mix',
+    recipe: {'a':percentage1, 'b':percentage2, 'c':percentage3, 'd':percentage4, 'e':percentageWater},
+    amount: 1,
+    name: name
+  };
+
+  // JSON stringify!!!
+  var jsonString = JSON.stringify(mixObject);
+  // Sanity check to be removed
+  console.log(jsonString);
+  ws.send(jsonString);
+  Materialize.toast('Ordering Drink!', 2000)
 }
 
 var sendMessage = function() {
@@ -113,7 +163,5 @@ ws.addEventListener('message', function(e) {
   } else if (msg.type == 'order') {
     updateOrderQueue(msg.status, msg.id, msg.name);
   }
-  document.getElementById('chatlog').innerHTML += '<br>' + msg;
-
 
 });
