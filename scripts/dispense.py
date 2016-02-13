@@ -2,44 +2,6 @@ import RPi.GPIO as GPIO
 import time
 import sys
 
-GPIO.setmode(GPIO.BOARD)
-
-
-disp =	[ [3, 5, 7, 8]
-,[10, 11, 12, 13]
-,[15, 16, 18, 19]
-,[21, 22, 23, 24]
-,[29, 31, 32, 33]]
-
-GPIO.setup(disp[0], GPIO.OUT,initial=GPIO.LOW)
-GPIO.setup(disp[1], GPIO.OUT,initial=GPIO.LOW)
-GPIO.setup(disp[2], GPIO.OUT,initial=GPIO.LOW)
-GPIO.setup(disp[3], GPIO.OUT,initial=GPIO.LOW)
-GPIO.setup(disp[4], GPIO.OUT,initial=GPIO.LOW)
-
-i = 0
-if(len(sys.argv))!= 4: #wrong arg count
-	sys.exit(1)
-	
-times = sys.argv
-if(times[0]+times[1]+times[2]+times[3]>20): #too much
-	sys.exit(2)
-
-while(i<1000*max(times)):
-	i += 1
-	if(times[0]<=i/1000):
-		dispSet(0,i)
-	if(times[1]<=i/1000):
-		dispSet(1,i)
-	if(times[2]<=i/1000):
-		dispSet(2,i)
-	if(times[3]<=i/1000):
-		dispSet(3,i)
-		
-	time.sleep(0.001)
-	
-sys.exit(0)
-
 def dispSet(d, i):
 	if(i%8==0):
 		GPIO.output(disp[d][3], GPIO.LOW)		
@@ -57,3 +19,42 @@ def dispSet(d, i):
 		GPIO.output(disp[d][2], GPIO.LOW)
 	if(i%8==7):
 		GPIO.output(disp[d][0], GPIO.HIGH)
+
+GPIO.setmode(GPIO.BOARD)
+
+GPIO.setwarnings(False)
+
+disp =	[ [3, 5, 7, 8]
+,[10, 11, 12, 13]
+,[15, 16, 18, 19]
+,[21, 22, 23, 24]
+,[29, 31, 32, 33]]
+
+GPIO.setup(disp[0], GPIO.OUT,initial=GPIO.LOW)
+GPIO.setup(disp[1], GPIO.OUT,initial=GPIO.LOW)
+GPIO.setup(disp[2], GPIO.OUT,initial=GPIO.LOW)
+GPIO.setup(disp[3], GPIO.OUT,initial=GPIO.LOW)
+GPIO.setup(disp[4], GPIO.OUT,initial=GPIO.LOW)
+
+if(len(sys.argv))!= 4: #wrong arg count
+	sys.exit(1)
+	
+times = [int(i) for i in sys.argv[1:]]
+if(times[0]+times[1]+times[2]+times[3]>20): #too much
+	sys.exit(2)
+	
+i = 0
+while(i<1000*max(times)):
+	i += 1
+	if(times[0]<=i/1000):
+		dispSet(0,i)
+	if(times[1]<=i/1000):
+		dispSet(1,i)
+	if(times[2]<=i/1000):
+		dispSet(2,i)
+	if(times[3]<=i/1000):
+		dispSet(3,i)
+		
+	time.sleep(0.001)
+	
+sys.exit(0)
