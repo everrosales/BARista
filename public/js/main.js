@@ -14,6 +14,11 @@ $('#orderDrink').click(function() {
   console.log('order me a drink minion');
 });
 
+var saveDrinkPercentage = function(drinkNum){
+    var percentage = $('#drink' + drinkNum + "Percentage").val();
+    percentageBalancer(drinkNum);
+}
+
 $('#pingButton').click(function() {
   console.log('clicking ping');
   sendMessage();
@@ -22,6 +27,26 @@ $('#pingButton').click(function() {
 
 ws = new WebSocket('ws://' + window.location.hostname + ':1234', 'echo-protocol');
 console.log(ws);
+
+function percentageBalancer(mostRecentDrink){
+    if($('#drink' + mostRecentDrink + 'Percentage').val() >= 100){
+        $('#drink1Percentage').val(0);
+        $('#drink2Percentage').val(0);
+        $('#drink3Percentage').val(0);
+        $('#drink4Percentage').val(0);
+        $('#drink' + mostRecentDrink + 'Percentage').val(100);
+    }
+    var percentage1 = Number($('#drink1Percentage').val());
+    var percentage2 = Number($('#drink2Percentage').val());
+    var percentage3 = Number($('#drink3Percentage').val());
+    var percentage4 = Number($('#drink4Percentage').val());
+    var percentageWater = 100 - (percentage1 + percentage2 + percentage3 + percentage4);
+    $('#drink1Fill').val(percentage1).css("width", percentage1+"%");
+    $('#drink2Fill').val(percentage2).css("width", percentage2+"%");
+    $('#drink3Fill').val(percentage3).css("width", percentage3+"%");
+    $('#drink4Fill').val(percentage4).css("width", percentage4+"%");
+    $('#drink5Fill').val(percentageWater).css("width", percentageWater+"%");
+}
 
 var orderMix = function(e) {
   var mix = e.value;
