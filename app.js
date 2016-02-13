@@ -76,8 +76,16 @@ var processQueue = function() {
   for (var i in clients) {
       clients[i].sendUTF(JSON.stringify(topDrink));
   }
+
+  var recipeRaw = topDrink.recipe;
+  var recipe = {};
+  for (var key in recipeRaw) {
+    recipe[key] = recipeRaw[key] * 10;
+  }
+  console.log(recipe);
   // Run Josh's scripts
-  PythonShell.run('test.py', {scriptPath: 'scripts'}, function(err, results) {
+  console.log(recipe.a + ' ' + recipe.b + ' ' + recipe.c + ' ' + recipe.d + ' ' + recipe.e);
+  PythonShell.run('dispense.py', {scriptPath: 'scripts', args: [recipe.a, recipe.b, recipe.c, recipe.d, recipe.e]}, function(err, results) {
     if (err) console.log('Sadness: ' + err);
     var processedDrink = topDrink;
     processedDrink.status = "Clear";
