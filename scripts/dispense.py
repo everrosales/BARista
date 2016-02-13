@@ -2,6 +2,8 @@ import RPi.GPIO as GPIO
 import time
 import sys
 
+TIME_SCALE = 1000
+
 def dispSet(d, i):
 	if(i%8==0):
 		GPIO.output(disp[d][3], GPIO.LOW)		
@@ -36,23 +38,23 @@ GPIO.setup(disp[2], GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(disp[3], GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(disp[4], GPIO.OUT,initial=GPIO.LOW)
 
-if(len(sys.argv))!= 4: #wrong arg count
+if(len(sys.argv))!= 5: #wrong arg count
 	sys.exit(1)
 	
 times = [int(i) for i in sys.argv[1:]]
-if(times[0]+times[1]+times[2]+times[3]>20): #too much
+if(times[0]+times[1]+times[2]+times[3]>20000/TIME_SCALE): #too much
 	sys.exit(2)
 	
 i = 0
-while(i<1000*max(times)):
+while(i<TIME_SCALE*max(times)):
 	i += 1
-	if(times[0]<=i/1000):
+	if(times[0]>i/TIME_SCALE):
 		dispSet(0,i)
-	if(times[1]<=i/1000):
+	if(times[1]>i/TIME_SCALE):
 		dispSet(1,i)
-	if(times[2]<=i/1000):
+	if(times[2]>i/TIME_SCALE):
 		dispSet(2,i)
-	if(times[3]<=i/1000):
+	if(times[3]>i/TIME_SCALE):
 		dispSet(3,i)
 		
 	time.sleep(0.001)
