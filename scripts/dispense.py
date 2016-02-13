@@ -38,6 +38,8 @@ GPIO.setup(disp[2], GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(disp[3], GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(disp[4], GPIO.OUT,initial=GPIO.LOW)
 
+time.sleep(2)#server buffering
+
 if(len(sys.argv))!= 6: #wrong arg count
 	sys.exit(1)
 	
