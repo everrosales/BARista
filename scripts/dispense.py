@@ -38,7 +38,7 @@ GPIO.setup(disp[2], GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(disp[3], GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(disp[4], GPIO.OUT,initial=GPIO.LOW)
 
-if(len(sys.argv))!= 5: #wrong arg count
+if(len(sys.argv))!= 6: #wrong arg count
 	sys.exit(1)
 	
 times = [int(i) for i in sys.argv[1:]]
@@ -56,6 +56,8 @@ while(i<TIME_SCALE*max(times)):
 		dispSet(2,i)
 	if(times[3]>i/TIME_SCALE):
 		dispSet(3,i)
+	if(times[4]>i/TIME_SCALE):
+		dispSet(4,i)
 		
 	time.sleep(0.001)
 	
