@@ -4,9 +4,9 @@ window.setInterval(function() {
 
 var drinkMap = {
   '1': {'a': 0.5, 'b': 0.5, 'c': 0,'d': 0, 'e': 0},
-  '2': {'a': 0.5, 'b': 0.5, 'c': 0,'d': 0, 'e': 0},
+  '2': {'a': 0, 'b': 0.5, 'c': 0.5,'d': 0, 'e': 0},
   '3': {'a': 0.5, 'b': 0.5, 'c': 0,'d': 0, 'e': 0},
-  '4': {'a': 0.5, 'b': 0.5, 'c': 0,'d': 0, 'e': 0},
+  '4': {'a': 0.1, 'b': 0.3, 'c': 0.5,'d': 0, 'e': 0},
   '5': {'a': 0, 'b': 0, 'c': 0,'d': 0, 'e': 1}
 }
 
@@ -103,7 +103,7 @@ var orderMix = function(e) {
   Materialize.toast('Ordering Drink!', 2000)
 };
 
-var orderCustomMix = function(e) { 
+var orderCustomMix = function(e) {
   var mix = e.value;
   var name = document.getElementById('name').value;
   // TODO(everrosales): Check that mix is a number 1, 2, 3, 4, 5
