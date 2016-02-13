@@ -19,6 +19,7 @@
     "google-auth-library": "^0.9.7",
     "googleapis": "^2.1.7",
     "handlebars": "^4.0.5",
+    "http": "0.0.0",
     "morgan": "^1.6.1",
     "nodemon": "^1.8.1",
     "websocket": "^1.0.22"

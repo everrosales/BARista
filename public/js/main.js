@@ -3,20 +3,26 @@ window.setInterval(function() {
 }, 60000)
 $('#orderDrink').click(function() {
   console.log('order me a drink minion');
-})
-
-
-var WebSocketServer = require('websocket').server;
-wsServer = new WebSocketServer({
-  httpServer: server
 });
 
-wsServer.on('request', function(r) {
-  var connection = r.accept('echo-protocol', r.origin);
-  var count = 0;
-  var clients = {};
-  var id = count++;
-  clients[id] = connection;
-  console.log((new Date()) + ' Connection accepted [' + id + ']');
-
+$('#pingButton').click(function() {
+  console.log('clicking ping');
+  sendMessage();
+  $('#message').innerHTML = "";
 })
+
+ws = new WebSocket('ws://18.111.63.105:1234', 'echo-protocol');
+console.log(ws);
+
+var sendMessage = function() {
+  var message = $('#message')[0].value;
+  console.log(message);
+  ws.send(message);
+  console.log('sent message');
+
+}
+
+ws.addEventListener('message', function(e) {
+  var msg = e.data;
+  document.getElementById('chatlog').innerHTML += '<br>' + msg;
+});

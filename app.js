@@ -6,6 +6,11 @@ var readline = require('readline');
 var logger = require('morgan');
 
 var index = require('./routes/index');
+var http = require('http');
+var server = http.createServer(function(request, response) {});
+server.listen(1234, function() {
+  console.log((new Date()) + ' Server is listening on port 1234');
+});
 
 var app = express();
 
@@ -22,13 +27,14 @@ app.use('/', index);
 // app.use('/gmail', gmail);
 var WebSocketServer = require('websocket').server;
 wsServer = new WebSocketServer({
-  httpServer: app
+  httpServer: server
 });
+
+var count = 0;
+var clients = {};
 
 wsServer.on('request', function(r) {
   var connection = r.accept('echo-protocol', r.origin);
-  var count = 0;
-  var clients = {};
   var id = count++;
   clients[id] = connection;
   console.log((new Date()) + ' Connection accepted [' + id + ']');
@@ -36,8 +42,16 @@ wsServer.on('request', function(r) {
     var msgString = message.utf8Data;
 
     console.log('Recieved msg: ' + msgString + ', by client: ' + id);
+    for (var i in clients) {
+      clients[i].sendUTF(msgString);
+    }
   });
-})
+
+  connection.on('close', function(reasonCode, description) {
+    delete clients[id];
+    console.log((new Date()) + ' Peer ' + connection.remoteAddress + 'disconnected.');
+  });
+});
 
 
 // catch 404 and forward to error handler
