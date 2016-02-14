@@ -40,7 +40,7 @@ function percentageBalancer(mostRecentDrink){
     if(totalPercentage > 100){
         //Do stuff here
         var difference = totalPercentage - 100;
-        while(difference>0){
+        while(difference>0.1){
             var allDrinkNums = [];
             for(var i=1; i < 5; i++){
                 if(i != mostRecentDrink && Number($('#drink' + i + 'Percentage').val()) > 0){
@@ -161,4 +161,28 @@ ws.addEventListener('message', function(e) {
     updateOrderQueue(msg.status, msg.id, msg.name);
   }
 
+});
+
+//TwitchPlays
+var irc = require("tmi.js");
+
+var options = {
+    options: {
+        debug: true
+    },
+    connection: {
+        cluster: "chat",
+        reconnect: true
+    },
+    channels: ["#dragoncookiez"]
+};
+
+var client = new irc.client(options);
+
+// Connect the client to the server..
+client.connect();
+client.on("chat", function (channel, user, message, self) {
+  if(message.toLowerCase() == "#drink1"){
+      console.log('Test');
+  }
 });
