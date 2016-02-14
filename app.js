@@ -126,7 +126,7 @@ wsServer.on('request', function(r) {
 
   connection.on('close', function(reasonCode, description) {
     delete clients[id];
-    console.log((new Date()) + ' Peer ' + connection.remoteAddress + 'disconnected.');
+    console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
   });
 });
 
