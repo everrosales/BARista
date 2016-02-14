@@ -163,26 +163,26 @@ ws.addEventListener('message', function(e) {
 
 });
 
-//TwitchPlays
-var irc = require("tmi.js");
-
-var options = {
-    options: {
-        debug: true
-    },
-    connection: {
-        cluster: "chat",
-        reconnect: true
-    },
-    channels: ["#dragoncookiez"]
-};
-
-var client = new irc.client(options);
-
-// Connect the client to the server..
-client.connect();
-client.on("chat", function (channel, user, message, self) {
-  if(message.toLowerCase() == "#drink1"){
-      console.log('Test');
-  }
-});
+// //TwitchPlays
+// var irc = require("tmi.js");
+//
+// var options = {
+//     options: {
+//         debug: true
+//     },
+//     connection: {
+//         cluster: "chat",
+//         reconnect: true
+//     },
+//     channels: ["#dragoncookiez"]
+// };
+//
+// var client = new irc.client(options);
+//
+// // Connect the client to the server..
+// client.connect();
+// client.on("chat", function (channel, user, message, self) {
+//   if(message.toLowerCase() == "#drink1"){
+//       console.log('Test');
+//   }
+// });
